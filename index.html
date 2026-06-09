@@ -283,6 +283,22 @@ footer{
   .snum{font-size:19px;min-width:48px}
   .sicon{width:30px;height:30px;font-size:14px}
 }
+
+.kyra-glow{
+font-size:32px!important;
+font-weight:900!important;
+text-transform:uppercase;
+animation:kyraGlow 2s infinite alternate, floatKyra 3s ease-in-out infinite;
+text-shadow:0 0 10px #ff5200,0 0 20px #ffb300,0 0 40px #ff5200;
+}
+@keyframes kyraGlow{
+from{filter:brightness(1)}
+to{filter:brightness(1.4)}
+}
+@keyframes floatKyra{
+50%{transform:translateY(-6px)}
+}
+
 </style>
 </head>
 <body>
@@ -295,7 +311,7 @@ footer{
     <div class="badge-top">FREE FIRE &nbsp;●&nbsp; SENSITIVITY TOOL</div>
     <h1 class="logo-line1">ĐỘ NHẠY FREE FIRE</h1>
     <p class="logo-line2">ALL DEVICE — PRO SETTINGS</p>
-    <div class="author"><em>👑</em>&nbsp;KYRA GAMING — GIA BẢO DEV</div>
+    <div class="author"><em>👑</em>&nbsp;<span class="kyra-glow">Kyra-Gia Bảo</span></div>
   </header>
 
   <div class="card" style="text-align:center;background:linear-gradient(135deg,#161616,#0d0d0d);border:1px solid rgba(255,179,0,.35)">
@@ -827,6 +843,41 @@ function toast(msg){
   el.textContent=msg;el.classList.add('show');
   setTimeout(()=>el.classList.remove('show'),2800);
 }
+
+/* === KYRA UPDATE === */
+function getButtonSize(device){
+ const d=(device||"").toLowerCase();
+ const iphone=/iphone|ipad/.test(d);
+ let size;
+ if(iphone){
+   if(/6|7|8|x|xr/.test(d)) size=40;
+   else if(/11|12/.test(d)) size=44;
+   else if(/13|14|15|16|17/.test(d)) size=48;
+   else size=45;
+ }else{
+   if(/ultra|rog|pro|max|gt|pixel 9|x100/.test(d)) size=49;
+   else if(/a0|c11|c12|c20|y1|hot 10/.test(d)) size=35;
+   else size=42;
+ }
+ return size;
+}
+
+localStorage.setItem("kyra_last_version","enabled");
+
+const oldShowResults = showResults;
+showResults = function(dev,s){
+ oldShowResults(dev,s);
+ const size = getButtonSize(dev);
+ let box=document.getElementById('btnsizebox');
+ if(!box){
+   box=document.createElement('div');
+   box.id='btnsizebox';
+   box.style.cssText='margin:15px 20px;padding:12px;border:1px solid #ffb300;border-radius:12px;background:rgba(255,179,0,.08);font-weight:700';
+   document.querySelector('#results .sens-grid').after(box);
+ }
+ box.innerHTML='🔥 KÍCH THƯỚC NÚT BẮN ĐỀ XUẤT: <span style="color:#FFB300">'+size+'%</span>';
+}
+
 </script>
 </body>
 </html>
